@@ -20,14 +20,14 @@ struct Node
 	int x, y;
 	struct Node *next;
 };
-Node now,really;
+Node now,really,all[2000];
 struct 
 {
 	Node head;
 	Node tail;
 	int len,speed;
 }snake;
-int levelnumber=1, mark=0,longer=0,key=0;
+int levelnumber=1, mark=0,longer=0,key=0,num=0;
 void title();
 void gotoxy(int x, int y);
 void load();
@@ -245,7 +245,7 @@ void makefood()
 				}
 				now = *temp.next;
 			}
-			if (flag && food.x % 2 == 0)break;
+			if (flag && food.x % 2-1 == 0)break;
 		}
 		gotoxy(food.x, food.y);
 		printf("⊙");
@@ -313,6 +313,7 @@ void everystep()
 		break;
 	}
 	//还差功能按键判断
+	//只需要此时维护蛇链即可
 	if (longer != 0)
 	{
 		Node q;
@@ -321,20 +322,45 @@ void everystep()
 		gotoxy(q.x, q.y);
 		cout << "■";
 		longer--;
+
+		all[(++num) % 1000] = *snake.head.next;
+		num = num % 1000;
+		snake.head.next = &all[num];
+		for (int i = 2; i <= snake.len; i++)
+		{
+			if (i != snake.len)
+			{
+				Node q;
+				q = *all[num].next;
+				all[++num] = q;
+				all[num - 1].next = &all[num];
+			}
+
+		}
 		
 	}
 	else
 	{
-		Node q=snake.head;
-		for (int i = 1; i <= snake.len; i++)
+		gotoxy(snake.head.x, snake.head.y);
+		cout << "■";
+		all[(++num) % 1000] = *snake.head. next;
+		num = num % 1000;
+		snake.head.next = &all[num];
+		for (int i = 2; i <= snake.len; i++)
 		{
-			gotoxy(q.x, q.y);
+			gotoxy(all[num].x, all[num].y);
 			cout << "■";
-			if (i != snake.len)  q = *q.next;
-			else snake.tail = q;
+			if (i != snake.len)
+			{
+				Node q;
+				q = *all[num].next;
+				all[++num] = q;
+				all[num - 1].next = &all[num];
+			}
+			
 		}
 		Node e;
-		e = *q.next;
+		e = *all[num].next;
 		gotoxy(e.x, e.y);
 		cout << "  ";
 	}
