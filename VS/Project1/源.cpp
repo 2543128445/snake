@@ -362,6 +362,7 @@ void startlevel(int level, int mar)
 		//makeboom();
 		makeshit();
 		makefood();
+		makeboom();
 		Sleep(snake.speed);
 		everystep();
 	}
@@ -637,16 +638,66 @@ void everystep()
 				Node e;
 				e = *all[num].next;
 				gotoxy(e.x, e.y);
-				cout << "  ";
+				cout << " ";
 				e = *e.next;
 				gotoxy(e.x, e.y);
-				cout << "  ";
+				cout << " ";
 				--snake.len;
 				longer = 0;
 			}
 			
 		}
-		
+		if (longer == -2)
+		{
+			gotoxy(snake.head.x, snake.head.y);
+			cout << "¡ö";
+			int f = 1;
+			if (snake.len % 2 == 0) f = 0; 
+			snake.head.next = &all[num];
+			if (f == 0)
+			{
+				for (int i = 2; i <= snake.len; i++)
+				{
+					gotoxy(all[num].x, all[num].y);
+					if (i <= snake.len / 2)
+						cout << "¡ö";
+					else
+						cout << "  ";
+					if (i != snake.len)
+					{
+						Node q;
+						q = *all[num].next;
+						all[++num] = q;
+						all[num - 1].next = &all[num];
+					}
+				}
+				snake.len = snake.len / 2;
+			}
+			if (f == 1)
+			{
+				for (int i = 2; i <= snake.len; i++)
+				{
+					gotoxy(all[num].x, all[num].y);
+					if (i <= (snake.len +1)/2)
+						cout << "¡ö";
+					else
+						cout << "  ";
+					if (i != snake.len)
+					{
+						Node q;
+						q = *all[num].next;
+						all[++num] = q;
+						all[num - 1].next = &all[num];
+					}
+				}
+				snake.len = (snake.len + 1) / 2;
+			}
+			Node e;
+			e = *all[num].next;
+			gotoxy(e.x, e.y);
+			cout << "  ";
+			longer = 0;
+		}	
 	}
 	gotoxy(wid + 2, 0);
 }
@@ -755,4 +806,43 @@ void makeshit()
 		}
 	}
 }
+void makeboom()
+{
+	if (snake.head.x == boom.x && snake.head.y == boom.y)
+	{
+		if (snake.len == 2) { die(); }
+		else
+		{
+			srand((unsigned int)time(NULL));
+			while (1)
+			{
+				int flag = 1;
+				boom.x = rand() % (wid - 4) + 2;
+				boom.y = rand() % (hei - 2) + 2;
+				if (boom.x % 2 == 0 || boom.x == 1 || boom.y == 1 || boom.x == 99 || boom.y == 50 || (boom.x == food.x && boom.y == food.y)) continue;
+				for (int i = 1; i <= shitnum; i++)
+				{
+					if (shit[i].x == boom.x && shit[i].y == boom.y) flag = 0;
+				}
+				if (flag == 0) continue;
+				Node now = snake.head;
+				for (int k = 1; k <= snake.len; k++)
+				{
+					Node temp;
+					temp = now;
+					if (temp.x == boom.x && temp.y == boom.y)
+					{
+						flag = 0;
+						break;
+					}
+					now = *temp.next;
+				}
+				if (flag)break;
+			}
+			gotoxy(boom.x, boom.y);
+			printf("¡ï");
+			longer=-2;
+		}	
+	}
 
+}
