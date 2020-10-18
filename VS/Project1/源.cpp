@@ -47,7 +47,6 @@ bool cmp(someone a, someone b)
 int main()
 {
 	title();
-	system("pause");
 	return 0;
 }
 void gotoxy(int x, int y)
@@ -100,25 +99,25 @@ void title()
 	}
 	gotoxy(46,16);
 	cout << "贪  吃  蛇";
-	gotoxy(10, 22);
+	gotoxy(8, 22);
 	cout << "游戏说明：请用英文输入法。此为蒟蒻LZY所写，因bug带给您的问题敬请谅解,请用WASD移动";
 	gotoxy(6, 24);
-	cout << "￥吃后增加长度，Ω与★吃掉减长度。到达一定长度后出现⊙，吃后进入下一关,游戏过程中按E退出";
-	gotoxy(30, 26);
-	cout << "蛇长度为2时再受伤会死，毕竟要有头和身子嘛";
+	cout << "￥吃后增加长度，Ω吃掉减长度，★吃掉后长度减半且发生奇妙的事情，蛇长度为2时再受伤会死。";
+	gotoxy(22, 26);
+	cout << "到达一定长度后出现⊙，吃后进入下一关,游戏过程中按E退出";
 	gotoxy(42, 32);
 	load();
 	cout << "新 游 戏 请 按 2";
 	if (levelnumber != 1)
 	{
-		gotoxy(42, 30);
+		gotoxy(40, 30);
 		cout << "继 续 游 戏 请 按 1";
 	}
-	gotoxy(42, 34);
+	gotoxy(36, 34);
 	cout << "任 选 关 卡 与 难 度 请 按 3";
-	gotoxy(42, 36);
+	gotoxy(40, 36);
 	cout << "查 看 排 行 榜 请 按 4";
-	gotoxy(42, 38);
+	gotoxy(60, 42);
 	cout << "按 任 意 其 他 按 键 退 出";
 	while (key==0)
 	{
@@ -159,7 +158,7 @@ void title()
 		{
 			input >> NB[i].name >> NB[i].goal;
 		}
-		sort(NB + 1, NB + people, cmp);
+		sort(NB + 1, NB + people+1, cmp);
 		input.close();
 		gotoxy(36, 10); cout << "name                    mark";
 		for (int i = 1; i <= min(people, 10); i++)
@@ -184,7 +183,7 @@ void title()
 }
 void startlevel(int level, int mar)
 {
-	gotoxy(40, 18); printf("第 %d 关   分 数：%d  难 度：%d", level, mar, harder);
+	gotoxy(40, 18); printf("第 %d 关   分 数：%d   难 度：%d", level, mar, harder);
 	Sleep(3000);
 	system("cls");
 	levelnumber = level;
@@ -638,10 +637,10 @@ void everystep()
 				Node e;
 				e = *all[num].next;
 				gotoxy(e.x, e.y);
-				cout << " ";
+				cout << "  ";
 				e = *e.next;
 				gotoxy(e.x, e.y);
-				cout << " ";
+				cout << "  ";
 				--snake.len;
 				longer = 0;
 			}
@@ -730,7 +729,16 @@ void die()
 	cout << "按 3 将 成 绩 上 传 至 排 行 榜";
 	gotoxy(40, 26);
 	cout << "任 意 键 退 出";
-		key = 0;
+	key = 0;
+	while (key == 0)
+	{
+		if (_kbhit())//接收按键
+		{
+			fflush(stdin);
+			key = _getch();
+		}
+	}
+	key = 0;
 	while (key == 0)
 	{
 		if (_kbhit())//接收按键
@@ -751,9 +759,9 @@ void die()
 		NB[people].goal = mark;
 		ofstream output;
 		output.open("rank.txt");
-		output << people<<' ';
+		output << people<<endl;
 		for (int i = 1; i <= people; i++)
-			output << NB[i].name << ' ' << NB[i].goal;
+			output << NB[i].name << ' ' << NB[i].goal<<endl;
 		output.close();
 		title();
 	}
