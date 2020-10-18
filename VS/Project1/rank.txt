@@ -1,1 +1,8 @@
-7 cccccc 78ddddd 78aaaaa 66eeee 44bbbbb 23fffffff 20wdasd 4
+7
+eee 89
+bbbb 55
+asdd 44
+ffff 44
+dddd 23
+cccc 12
+LZY 67
