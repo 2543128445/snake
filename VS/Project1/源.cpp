@@ -8,8 +8,8 @@
 #include<stdlib.h>
 #include<conio.h>
 #include<fstream>
-#define wid 100
-#define hei 50
+#define wid 60
+#define hei 30
 #define snakesize 1000
 //¡ÑÊ³Îï ¡öÉßÉí
 using namespace std;
@@ -83,18 +83,18 @@ void title()
 	}
 	sort(NB + 1, NB + people+1, cmp);
 	input.close();
-	for (int i = 1; i <= wid; i += 2)
+	for (int i = 1; i <= 100; i += 2)
 	{
 		gotoxy(i, 1);
 		cout << "¡ö";
-		gotoxy(i, hei);
+		gotoxy(i, 50);
 		cout << "¡ö";
 	}
-	for (int i = 1; i <= hei; i++)
+	for (int i = 1; i <= 50; i++)
 	{
 		gotoxy(1, i);
 		cout << "¡ö";
-		gotoxy(wid-1,i );
+		gotoxy(99,i );
 		cout << "¡ö";
 	}
 	gotoxy(46,16);
@@ -250,7 +250,7 @@ void startlevel(int level, int mar)
 		int flag = 1;
 		food.x = rand() % (wid - 4) + 2;
 		food.y = rand() % (hei - 2) + 1;
-		if (food.x % 2 == 0||food.x==1||food.y==1||food.x==99||food.y==50) continue;
+		if (food.x % 2 == 0||food.x==1||food.y==1||food.x==59||food.y==30) continue;
 		Node q = snake.head;
 		for (int k = 1; k <= snake.len; k++)
 		{
@@ -274,7 +274,7 @@ void startlevel(int level, int mar)
 		int flag = 1;
 		boom.x = rand() % (wid - 4) + 2;
 		boom.y = rand() % (hei - 2) + 1;
-		if (boom.x % 2 == 0 || boom.x == 1 || boom.y == 1 || boom.x == 99 || boom.y == 50||(boom.x==food.x&&boom.y==food.y)) continue;
+		if (boom.x % 2 == 0 || boom.x == 1 || boom.y == 1 || boom.x == 59 || boom.y == 30||(boom.x==food.x&&boom.y==food.y)) continue;
 		Node q = snake.head;
 		for (int k = 1; k <= snake.len; k++)
 		{
@@ -299,7 +299,7 @@ void startlevel(int level, int mar)
 		int flag = 1;
 		shit[1].x = rand() % (wid - 4) + 2;
 		shit[1].y = rand() % (hei - 2) + 1;
-		if (shit[1].x % 2 == 0 || (shit[1].x == food.x && shit[1].y == food.y) || (shit[1].x == boom.x && shit[1].y == boom.y)|| shit[1].x == 1 || shit[1].y == 1 || shit[1].x == 99 || shit[1].y == 50) continue;
+		if (shit[1].x % 2 == 0 || (shit[1].x == food.x && shit[1].y == food.y) || (shit[1].x == boom.x && shit[1].y == boom.y)|| shit[1].x == 1 || shit[1].y == 1 || shit[1].x == 59 || shit[1].y == 30) continue;
 		Node q = snake.head;
 		for (int k = 1; k <= snake.len; k++)
 		{
@@ -327,7 +327,7 @@ void startlevel(int level, int mar)
 				int flag = 1;
 				shit[i].x = rand() % (wid - 4) + 2;
 				shit[i].y = rand() % (hei - 2) + 1;
-				if (shit[i].x % 2 == 0 || (shit[i].x == food.x && shit[i].y == food.y) || (shit[i].x == boom.x && shit[i].y == boom.y) || shit[i].x == 1 || shit[i].y == 1 || shit[i].x == 99 || shit[i].y == 50) continue;
+				if (shit[i].x % 2 == 0 || (shit[i].x == food.x && shit[i].y == food.y) || (shit[i].x == boom.x && shit[i].y == boom.y) || shit[i].x == 1 || shit[i].y == 1 || shit[i].x == 59 || shit[i].y == 30) continue;
 				Node q = snake.head;
 				for (int k = 1; k <= snake.len; k++)
 				{
@@ -370,7 +370,7 @@ void makefood()
 {
 	if (snake.head.x == food.x && snake.head.y == food.y)
 	{
-		if (snake.len < 20+10*levelnumber*harder ) 
+		if (snake.len < 12+6*levelnumber*harder ) 
 		{
 			srand((unsigned int)time(NULL));
 			while (1)
@@ -378,7 +378,7 @@ void makefood()
 				int flag=1;
 				food.x = rand() % (wid - 4) + 2;
 				food.y = rand() % (hei - 2) + 2;
-				if (food.x % 2 == 0 || food.x == 1 || food.y == 1 || food.x == 99 || food.y == 50 || (boom.x == food.x && boom.y == food.y)) continue;
+				if (food.x % 2 == 0 || food.x == 1 || food.y == 1 || food.x == 59 || food.y == 30 || (boom.x == food.x && boom.y == food.y)) continue;
 				for (int i = 1; i <= shitnum; i++)
 				{
 					if (shit[i].x == food.x && shit[i].y == food.y) flag = 0;
@@ -404,7 +404,7 @@ void makefood()
 		}
 		else
 		{
-			if (snake.len ==20+ 10 * levelnumber * harder)
+			if (snake.len == 12 + 6 * levelnumber * harder)
 			{
 				srand((unsigned int)time(NULL));
 				while (1)
@@ -412,7 +412,7 @@ void makefood()
 					int flag = 1;
 					food.x = rand() % (wid - 4) + 2;
 					food.y = rand() % (hei - 2) + 2;
-					if (food.x % 2 == 0 || food.x == 1 || food.y == 1 || food.x == 99 || food.y == 50 || (boom.x == food.x && boom.y == food.y)) continue;
+					if (food.x % 2 == 0 || food.x == 1 || food.y == 1 || food.x == 59 || food.y == 30 || (boom.x == food.x && boom.y == food.y)) continue;
 					for (int i = 1; i <= shitnum; i++)
 					{
 						if (shit[i].x == food.x && shit[i].y == food.y) flag = 0;
@@ -702,7 +702,7 @@ void everystep()
 }
 bool dieorlive()
 {
-	if (snake.head.x == 1 || snake.head.x == 99 || snake.head.y == 1 || snake.head.y == 50) return 1;
+	if (snake.head.x == 1 || snake.head.x == 59 || snake.head.y == 1 || snake.head.y == 30) return 1;
 	Node s=*snake.head.next;
 	for (int i = 1; i <= snake.len - 1; i++)
 	{
@@ -783,7 +783,7 @@ void makeshit()
 					int flag = 1;
 					shit[i].x = rand() % (wid - 4) + 2;
 					shit[i].y = rand() % (hei - 2) + 2;
-					if (shit[i].x % 2 == 0||(shit[i].x==food.x&&shit[i].y==food.y) || (shit[i].x == boom.x && shit[i].y == boom.y) || shit[i].x == 1 || shit[i].y == 1 || shit[i].x == 99 || shit[i].y == 50) continue;
+					if (shit[i].x % 2 == 0||(shit[i].x==food.x&&shit[i].y==food.y) || (shit[i].x == boom.x && shit[i].y == boom.y) || shit[i].x == 1 || shit[i].y == 1 || shit[i].x == 59 || shit[i].y == 30) continue;
 					for (int j = 1; j <= shitnum; j++)
 					{
 						if (shit[j].x == shit[i].x && shit[j].y == shit[i].y&&i!=j)
@@ -827,7 +827,7 @@ void makeboom()
 				int flag = 1;
 				boom.x = rand() % (wid - 4) + 2;
 				boom.y = rand() % (hei - 2) + 2;
-				if (boom.x % 2 == 0 || boom.x == 1 || boom.y == 1 || boom.x == 99 || boom.y == 50 || (boom.x == food.x && boom.y == food.y)) continue;
+				if (boom.x % 2 == 0 || boom.x == 1 || boom.y == 1 || boom.x == 59 || boom.y == 30 || (boom.x == food.x && boom.y == food.y)) continue;
 				for (int i = 1; i <= shitnum; i++)
 				{
 					if (shit[i].x == boom.x && shit[i].y == boom.y) flag = 0;
